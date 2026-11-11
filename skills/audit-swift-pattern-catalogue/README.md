@@ -1,5 +1,7 @@
 # Audit Swift Pattern Catalogue
 
+<p align="center"><img src="assets/icon-large.svg" alt="A magnifying glass auditing a pattern catalogue grid" width="144"></p>
+
 Review a multi-pattern Swift catalogue as a decision system, not as a pattern-counting exercise.
 
 > **Our position:** Strongly support patterns whose evidence moves responsibility to better owners; reject quotas, diagram mimicry, and speculative overengineering, including when direct Swift is the right catalogue outcome.

@@ -19,6 +19,7 @@ Use RG's premium technical-editorial system: matte black or charcoal grounds, wh
 
 - Root: hero image, position, four-skill pipeline, skill selector, living-sync explanation, installation, validation, and repository map.
 - Skill: clear promise, position, use/do-not-use boundary, workflow Mermaid, inputs/outputs, examples, installation, and source-of-truth note.
+- Skill icon: one semantic glyph for the responsibility boundary, shown once near the title and bundled for host UI metadata.
 - Secondary maintenance details belong in `<details>` blocks or linked docs.
 
 ## Visual tokens
@@ -31,6 +32,7 @@ Use RG's premium technical-editorial system: matte black or charcoal grounds, wh
 | Secondary | `#A7A7A7` | Supporting explanation |
 | RG red | `#C92A2A` | Brand mark and decisive emphasis |
 | Warm orange | `#F4512C` | Evidence gates, links, and active accents |
+| Icon surface | `#111214` | Skill icon background |
 
 ## Signature
 
@@ -39,6 +41,7 @@ One direct rail passes through an evidence gate before branching into pattern wo
 ## Accessibility
 
 - Every raster has descriptive alt text.
+- Every SVG icon has a title, accessible description, and non-color semantic shape.
 - Mermaid diagrams have a prose explanation.
 - Tables remain compact and carry exact comparisons only.
 - Do not rely on color to distinguish use from refusal.

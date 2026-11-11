@@ -1,4 +1,4 @@
-<!-- Generated from rgmez/Design-Patterns-in-Swift@9d7bd17cb741a228cf2e3db596bb7221d63d5808:Documentation/pattern-readme-template.md. Do not edit by hand. -->
+<!-- Generated from rgmez/Design-Patterns-in-Swift@e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4:Documentation/pattern-readme-template.md. Do not edit by hand. -->
 
 # 📘 Pattern README Template
 
@@ -103,7 +103,7 @@ From the repository root:
 ## 🧪 Tests
 
 ```sh
-swift test -Xswiftc -warnings-as-errors --filter [VerifiedTestOrSuiteFilter]
+[Exact test command verified for this repository and target]
 ```
 
 The tests prove:
@@ -112,7 +112,7 @@ The tests prove:
 - [Failure, edge case, or invariant.]
 - [The pressure that justified the pattern, when testable.]
 
-Reference the exact test files and keep every command synchronized with the package.
+Reference the exact test files and keep every command synchronized with the repository's actual toolchain, whether SwiftPM, `xcodebuild`, or another verified runner.
 
 ## ⚖️ Trade-offs
 

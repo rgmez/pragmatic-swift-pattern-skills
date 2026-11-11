@@ -1,5 +1,7 @@
 # Choose Swift Design Pattern
 
+<p align="center"><img src="assets/icon-large.svg" alt="Several inputs converging through one evidence gate" width="144"></p>
+
 Make one evidence-backed architecture decision for a concrete Swift requirement.
 
 > **Our position:** Strongly favor a pattern when verified pressure moves responsibility to a better owner; favor direct Swift or no pattern when it does not.

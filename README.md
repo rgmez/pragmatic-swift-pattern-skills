@@ -4,7 +4,7 @@
 
 Portable Agent Skills for choosing, implementing, teaching, and auditing Swift design-pattern decisions from verified pressure.
 
-[![MIT License](https://img.shields.io/badge/license-MIT-white.svg)](LICENSE) [![4 skills](https://img.shields.io/badge/skills-4-C92A2A.svg)](skills/) [![upstream sync](https://img.shields.io/badge/upstream-sync-F4512C.svg)](upstream.lock.json)
+[![Release v1.0.0](https://img.shields.io/badge/release-v1.0.0-C2410C.svg)](https://github.com/rgmez/pragmatic-swift-pattern-skills/releases/tag/v1.0.0) [![MIT License](https://img.shields.io/badge/license-MIT-white.svg)](LICENSE) [![4 skills](https://img.shields.io/badge/skills-4-C92A2A.svg)](skills/) [![upstream sync](https://img.shields.io/badge/upstream-sync-F4512C.svg)](upstream.lock.json)
 
 > **Our position:** We are strongly in favor of design patterns when verified pressure moves responsibility to a better owner.
 >
@@ -45,7 +45,7 @@ Generated references keep the skills aligned with the upstream Swift catalogue, 
 
 The source catalogue remains independently useful: browse and run [Design Patterns in Swift](https://github.com/rgmez/Design-Patterns-in-Swift) when you need the full implementation, canonical guide, or behavioral tests behind a skill recommendation.
 
-`upstream.lock.json` records the source commit, synchronization time, and generated reference paths; the daily workflow opens a reviewable PR when evidence changes, never an automatic merge.
+`upstream.lock.json` records the latest evidence-bearing commit, synchronization time, and generated reference paths; the daily workflow opens a reviewable PR only when allowlisted evidence changes, never an automatic merge.
 
 See [Living evidence synchronization](docs/living-sync.md) for the allowlist, safety boundary, and manual workflow.
 
@@ -79,13 +79,14 @@ After installation, invoke the skill by name in the agent, for example: `Use $ch
 
 ```sh
 ruby scripts/validate_skills.rb
+ruby scripts/validate_evals.rb
 ruby scripts/sync_from_catalogue.rb --source ../Design-Patterns-in-Swift --check
 npx --yes skills@1.8.1 add . --list
 ```
 
 These checks validate package metadata, links, generated evidence, and CLI discovery; they do not claim runtime compatibility or adoption.
 
-See the [validation record](docs/validation.md) for the tested surfaces, behavioral scenarios, and explicit limits of that evidence.
+See the [validation record](docs/validation.md) for tested surfaces and explicit evidence limits, and the [reusable evaluations](docs/evaluations.md) for normal and safety-stop scenarios.
 
 ## Repository structure
 
@@ -93,6 +94,7 @@ See the [validation record](docs/validation.md) for the tested surfaces, behavio
 skills/                 Four portable Agent Skills and generated references
 scripts/                Validation and upstream synchronization tools
 assets/                 Repository editorial assets
+evals/                  Versioned normal and safety-stop evaluation cases
 upstream.lock.json      Evidence source commit and generated-file manifest
 ```
 

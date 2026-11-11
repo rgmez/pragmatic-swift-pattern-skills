@@ -24,6 +24,7 @@ Use the current [Agent Skills specification](https://agentskills.io/specificatio
 
 ```sh
 ruby scripts/validate_skills.rb
+ruby scripts/validate_evals.rb
 ruby scripts/sync_from_catalogue.rb --source /path/to/Design-Patterns-in-Swift --check
 ```
 

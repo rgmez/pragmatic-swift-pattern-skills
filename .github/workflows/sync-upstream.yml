@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -17,16 +18,17 @@ jobs:
 
     steps:
       - name: Check out skills repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Check out pattern evidence
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: rgmez/Design-Patterns-in-Swift
           ref: master
           path: upstream
+          fetch-depth: 0
 
       - name: Sync generated references
         run: ruby scripts/sync_from_catalogue.rb --source upstream
@@ -34,6 +36,7 @@ jobs:
       - name: Validate synchronized repository
         run: |
           ruby scripts/validate_skills.rb
+          ruby scripts/validate_evals.rb
           ruby scripts/sync_from_catalogue.rb --source upstream --check
 
       - name: Detect changes
@@ -66,3 +69,9 @@ jobs:
               --head automation/sync-pattern-catalogue \
               --title "Update: Sync pattern catalogue evidence" \
               --body "Generated references changed because rgmez/Design-Patterns-in-Swift advanced. Review the evidence diff and merge only if the skill instructions still tell the truth."
+
+      - name: Validate synchronization branch
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run CI --ref automation/sync-pattern-catalogue

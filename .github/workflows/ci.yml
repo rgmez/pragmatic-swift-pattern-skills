@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,23 +18,27 @@ jobs:
 
     steps:
       - name: Check out skills repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Check out pattern evidence
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: rgmez/Design-Patterns-in-Swift
           ref: master
           path: upstream
+          fetch-depth: 0
 
       - name: Validate skill packages
         run: ruby scripts/validate_skills.rb
+
+      - name: Validate reusable evaluation cases
+        run: ruby scripts/validate_evals.rb
 
       - name: Verify generated evidence is current
         run: ruby scripts/sync_from_catalogue.rb --source upstream --check
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "22.20.0"
 

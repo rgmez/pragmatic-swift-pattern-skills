@@ -1,5 +1,7 @@
 interface:
   display_name: "Audit Swift Pattern Catalogue"
   short_description: "Audit a Swift pattern catalogue without pattern bias"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"
   brand_color: "#F4512C"
   default_prompt: "Use $audit-swift-pattern-catalogue to audit this catalogue for useful evidence, classification errors, and overengineering."

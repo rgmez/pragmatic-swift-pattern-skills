@@ -1,5 +1,7 @@
 # Implement Swift Design Pattern
 
+<p align="center"><img src="assets/icon-large.svg" alt="A narrow implementation boundary connecting verified nodes" width="144"></p>
+
 Turn one justified responsibility boundary into minimal Swift code and behavioral evidence.
 
 > **Our position:** Strongly favor the earned boundary, not the textbook diagram; direct Swift remains the successful result when the evidence gate fails.

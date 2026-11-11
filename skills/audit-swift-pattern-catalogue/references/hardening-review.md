@@ -1,4 +1,4 @@
-<!-- Generated from rgmez/Design-Patterns-in-Swift@9d7bd17cb741a228cf2e3db596bb7221d63d5808:Documentation/bonus-track-review.md. Do not edit by hand. -->
+<!-- Generated from rgmez/Design-Patterns-in-Swift@e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4:Documentation/bonus-track-review.md. Do not edit by hand. -->
 
 # Bonus Track Final Review
 

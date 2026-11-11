@@ -2,6 +2,7 @@
 
 require "json"
 require "pathname"
+require "rexml/document"
 require "uri"
 require "yaml"
 
@@ -16,6 +17,7 @@ FRONTMATTER_FIELDS = %w[name description license compatibility metadata allowed-
 OPENAI_TOP_LEVEL_FIELDS = %w[interface dependencies policy].freeze
 OPENAI_INTERFACE_FIELDS = %w[display_name short_description icon_small icon_large brand_color default_prompt].freeze
 SKILL_NAME_PATTERN = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
+ICON_COLORS = %w[#111214 #F4512C #C92A2A #FFFFFF #7B7F85].freeze
 
 errors = []
 skill_directories = Dir.glob(File.join(ROOT, "skills", "*")).select { |path| File.directory?(path) }.sort
@@ -129,6 +131,32 @@ skill_directories.each do |directory|
       prompt = interface["default_prompt"]
       errors << "#{relative(openai_path)} default_prompt must mention $#{name}" unless prompt.is_a?(String) && prompt.include?("$#{name}")
 
+      %w[icon_small icon_large].each do |icon_field|
+        icon_target = interface[icon_field]
+        unless icon_target.is_a?(String) && icon_target.start_with?("./assets/")
+          errors << "#{relative(openai_path)} #{icon_field} must point to ./assets/"
+          next
+        end
+
+        icon_path = File.expand_path(icon_target, directory)
+        unless File.file?(icon_path)
+          errors << "#{relative(openai_path)} missing #{icon_field}: #{icon_target}"
+          next
+        end
+
+        begin
+          icon_source = File.read(icon_path)
+          svg = REXML::Document.new(icon_source).root
+          valid_svg = svg&.name == "svg" && svg.attributes["viewBox"] && svg.attributes["role"] == "img" && svg.attributes["aria-labelledby"] && svg.elements["title"] && svg.elements["desc"]
+          errors << "#{relative(icon_path)} must be an accessible SVG" unless valid_svg
+          unexpected_colors = icon_source.scan(/#[0-9A-Fa-f]{6}/).map(&:upcase).uniq - ICON_COLORS
+          errors << "#{relative(icon_path)} uses colors outside the closed palette: #{unexpected_colors.join(", ")}" unless unexpected_colors.empty?
+          errors << "#{relative(icon_path)} contains a forbidden complex or raster element" if icon_source.match?(/<(?:filter|linearGradient|radialGradient|image|text|foreignObject)\b/i)
+        rescue REXML::ParseException => error
+          errors << "#{relative(icon_path)}: #{error.message}"
+        end
+      end
+
       interface.each do |field, value|
         next unless value.is_a?(String)
 
@@ -191,6 +219,7 @@ if File.file?(lock_path)
   begin
     lock = JSON.parse(File.read(lock_path))
     errors << "upstream.lock.json has invalid commit" unless lock["commit"]&.match?(/\A[0-9a-f]{40}\z/)
+    errors << "upstream.lock.json has invalid evidence selection" unless lock["selection"] == "latest commit touching allowlisted evidence"
     Array(lock["generated_files"]).each do |generated_path|
       absolute = File.join(ROOT, generated_path)
       errors << "Missing generated file: #{generated_path}" unless File.file?(absolute)

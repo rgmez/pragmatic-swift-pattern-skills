@@ -9,9 +9,11 @@ The skills are living tools, but automation does not decide architecture.
 
 ## Generated references
 
-`scripts/sync_from_catalogue.rb` copies an explicit allowlist of upstream evidence into skill-local references and records the exact upstream commit in `upstream.lock.json`.
+`scripts/sync_from_catalogue.rb` copies an explicit allowlist of upstream evidence into skill-local references and records the latest commit that touched any allowlisted source in `upstream.lock.json`.
 
-Every generated file contains its source path and commit. Generated Markdown links are rewritten to commit-pinned GitHub URLs so an installed skill keeps traceable evidence without depending on another local checkout.
+Every generated file contains its source path and evidence commit. Generated Markdown links are rewritten to commit-pinned GitHub URLs so an installed skill keeps traceable evidence without depending on another local checkout.
+
+An unrelated upstream commit does not advance the evidence commit, rewrite generated files, or open a synchronization pull request. When any allowlisted source changes, all generated references move together to one coherent catalogue snapshot.
 
 ## Automated workflow
 
@@ -23,6 +25,7 @@ The scheduled workflow:
 4. Stops when no evidence changed.
 5. Pushes an automation branch when generated files changed.
 6. Opens or reuses a pull request for human review.
+7. Dispatches CI on the synchronization branch so protected `master` receives a verified proposal.
 
 It never rewrites `SKILL.md`, never auto-merges, and never publishes a release.
 

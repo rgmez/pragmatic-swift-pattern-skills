@@ -1,5 +1,7 @@
 # Teach Swift Design Pattern
 
+<p align="center"><img src="assets/icon-large.svg" alt="An open technical guide with a highlighted decision point" width="144"></p>
+
 Turn verified Swift code and tests into a standalone guide that helps readers decide, not memorize.
 
 > **Our position:** Teach the pressure and ownership boundary first, and name the pattern only when evidence earns it; direct Swift or no pattern is a valid conclusion.

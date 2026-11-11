@@ -40,7 +40,8 @@ Use the existing RG matte-charcoal, white, muted-gray, red, and warm-orange visu
 
 - `rgmez/Design-Patterns-in-Swift` contains 23 canonical GoF guides, one no-pattern case, 359 tests in 194 suites, decision matrices, hardening reviews, README contracts, diagrams, and release evidence.
 - The existing `choose-swift-design-pattern` skill passed independent forward scenarios before extraction into this repository.
-- No customer testimonials, adoption metrics, or cross-agent behavioral claims exist yet; documentation must not fabricate them.
+- Eight versioned evaluation cases cover one normal and one safety-stop path per skill.
+- Complete-package installation is verified for Codex, Claude Code, Cursor, and GitHub Copilot; no customer testimonials, adoption metrics, or cross-host reasoning-equivalence claims exist, and documentation must not fabricate them.
 
 ## Product Principles
 

@@ -1,5 +1,7 @@
 interface:
   display_name: "Implement Swift Design Pattern"
   short_description: "Implement one evidence-backed Swift pattern"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"
   brand_color: "#F4512C"
   default_prompt: "Use $implement-swift-design-pattern to implement this justified pattern boundary with minimal Swift and behavioral tests."

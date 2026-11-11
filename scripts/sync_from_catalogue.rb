@@ -2,15 +2,16 @@
 
 require "fileutils"
 require "json"
+require "open3"
 require "optparse"
 require "pathname"
-require "shellwords"
 require "time"
 require "uri"
 
 ROOT = File.expand_path("..", __dir__)
 UPSTREAM_REPOSITORY = "rgmez/Design-Patterns-in-Swift"
 UPSTREAM_BRANCH = "master"
+EVIDENCE_SELECTION = "latest commit touching allowlisted evidence"
 
 MAPPINGS = [
   [".codex/skills/choose-swift-design-pattern/references/decision-matrix.md", "skills/choose-swift-design-pattern/references/decision-matrix.md", :markdown],
@@ -40,8 +41,10 @@ abort("--source is required") unless options[:source]
 source_root = File.expand_path(options[:source])
 abort("Not a Git repository: #{source_root}") unless system("git", "-C", source_root, "rev-parse", "--git-dir", out: File::NULL)
 
-upstream_commit = `git -C #{Shellwords.escape(source_root)} rev-parse HEAD`.strip
-abort("Could not resolve upstream commit") unless upstream_commit.match?(/\A[0-9a-f]{40}\z/)
+source_paths = MAPPINGS.map(&:first).uniq
+evidence_commit, status = Open3.capture2("git", "-C", source_root, "log", "-1", "--format=%H", "HEAD", "--", *source_paths)
+evidence_commit = evidence_commit.strip
+abort("Could not resolve the latest evidence commit") unless status.success? && evidence_commit.match?(/\A[0-9a-f]{40}\z/)
 
 def encoded_path(path)
   path.split("/").map { |component| URI.encode_www_form_component(component).gsub("+", "%20") }.join("/")
@@ -83,11 +86,11 @@ end
 stale = []
 
 MAPPINGS.each do |source_path, destination_path, kind|
-  source = File.join(source_root, source_path)
   destination = File.join(ROOT, destination_path)
-  abort("Missing upstream source: #{source_path}") unless File.file?(source)
+  raw, error, source_status = Open3.capture3("git", "-C", source_root, "show", "#{evidence_commit}:#{source_path}")
+  abort("Missing upstream source at evidence commit: #{source_path}\n#{error}") unless source_status.success?
 
-  expected = generated_content(File.read(source), source_path, upstream_commit, kind)
+  expected = generated_content(raw, source_path, evidence_commit, kind)
   if options[:check]
     stale << destination_path unless File.file?(destination) && File.read(destination) == expected
   else
@@ -101,7 +104,7 @@ lock_path = File.join(ROOT, "upstream.lock.json")
 if options[:check]
   if File.file?(lock_path)
     lock = JSON.parse(File.read(lock_path))
-    stale << "upstream.lock.json" unless lock["commit"] == upstream_commit
+    stale << "upstream.lock.json" unless lock["commit"] == evidence_commit && lock["selection"] == EVIDENCE_SELECTION
   else
     stale << "upstream.lock.json"
   end
@@ -112,23 +115,24 @@ if options[:check]
     exit 1
   end
 
-  puts "Catalogue references are current at #{upstream_commit}"
+  puts "Catalogue references are current at evidence commit #{evidence_commit}"
   exit 0
 end
 
 generated_files = MAPPINGS.map { |_, destination, _| destination }
 existing_lock = File.file?(lock_path) ? JSON.parse(File.read(lock_path)) : nil
-lock = if existing_lock && existing_lock["commit"] == upstream_commit && existing_lock["generated_files"] == generated_files
+lock = if existing_lock && existing_lock["commit"] == evidence_commit && existing_lock["selection"] == EVIDENCE_SELECTION && existing_lock["generated_files"] == generated_files
   existing_lock
 else
   {
     "repository" => UPSTREAM_REPOSITORY,
     "branch" => UPSTREAM_BRANCH,
-    "commit" => upstream_commit,
+    "commit" => evidence_commit,
+    "selection" => EVIDENCE_SELECTION,
     "synced_at" => Time.now.utc.iso8601,
     "generated_files" => generated_files
   }
 end
 File.write(lock_path, "#{JSON.pretty_generate(lock)}\n")
 
-puts "Synced #{MAPPINGS.count} generated files from #{UPSTREAM_REPOSITORY}@#{upstream_commit}"
+puts "Synced #{MAPPINGS.count} generated files from #{UPSTREAM_REPOSITORY}@#{evidence_commit}"

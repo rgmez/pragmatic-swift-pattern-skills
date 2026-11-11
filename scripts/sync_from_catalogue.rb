@@ -25,8 +25,7 @@ MAPPINGS = [
   [".codex/skills/choose-swift-design-pattern/references/catalogue-guidance.md", "skills/audit-swift-pattern-catalogue/references/catalogue-guidance.md", :markdown],
   [".codex/skills/choose-swift-design-pattern/references/example-quality-checklist.md", "skills/audit-swift-pattern-catalogue/references/example-quality-checklist.md", :markdown],
   ["Documentation/catalogue-review.md", "skills/audit-swift-pattern-catalogue/references/catalogue-review.md", :markdown],
-  ["Documentation/bonus-track-review.md", "skills/audit-swift-pattern-catalogue/references/hardening-review.md", :markdown],
-  ["scripts/validate_readmes.rb", "skills/audit-swift-pattern-catalogue/references/upstream-readme-validator.rb", :ruby]
+  ["Documentation/bonus-track-review.md", "skills/audit-swift-pattern-catalogue/references/hardening-review.md", :markdown]
 ].freeze
 
 options = { check: false }

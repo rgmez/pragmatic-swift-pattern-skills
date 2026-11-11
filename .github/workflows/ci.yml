@@ -40,7 +40,7 @@ jobs:
       - name: Discover skills through the public CLI
         env:
           DISABLE_TELEMETRY: "1"
-        run: npx --yes skills@1.7.2 add . --list
+        run: npx --yes skills@1.8.1 add . --list
 
       - name: Smoke-install for Codex, Claude Code, Cursor, and GitHub Copilot
         env:
@@ -48,10 +48,12 @@ jobs:
         run: |
           mkdir .smoke
           cd .smoke
-          npx --yes skills@1.7.2 add .. --skill '*' --agent codex --agent claude-code --agent cursor --agent github-copilot --copy --yes
+          npx --yes skills@1.8.1 add .. --skill '*' --agent codex --agent claude-code --agent cursor --agent github-copilot --copy --yes
           for skill in choose-swift-design-pattern implement-swift-design-pattern teach-swift-design-pattern audit-swift-pattern-catalogue; do
-            # CLI 1.7.2 uses the shared Agent Skills location for Codex, Cursor,
+            # The CLI uses the shared Agent Skills location for Codex, Cursor,
             # and GitHub Copilot, and a dedicated location for Claude Code.
             test -f ".agents/skills/$skill/SKILL.md"
             test -f ".claude/skills/$skill/SKILL.md"
+            diff -qr "../skills/$skill" ".agents/skills/$skill"
+            diff -qr "../skills/$skill" ".claude/skills/$skill"
           done

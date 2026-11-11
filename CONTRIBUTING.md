@@ -20,6 +20,8 @@ Contributions should improve a repeatable engineering decision, not expand patte
 
 ## Validate
 
+Use the current [Agent Skills specification](https://agentskills.io/specification) as the metadata authority and the [skills CLI agent matrix](https://github.com/vercel-labs/skills/blob/main/docs/agents.md) as the installation-path authority.
+
 ```sh
 ruby scripts/validate_skills.rb
 ruby scripts/sync_from_catalogue.rb --source /path/to/Design-Patterns-in-Swift --check
@@ -28,10 +30,10 @@ ruby scripts/sync_from_catalogue.rb --source /path/to/Design-Patterns-in-Swift -
 For packaging or installation changes:
 
 ```sh
-DISABLE_TELEMETRY=1 npx skills@1.7.2 add . --list
+DISABLE_TELEMETRY=1 npx --yes skills@1.8.1 add . --list
 ```
 
-Use a temporary project and explicit agent IDs for installation smoke tests. Inspect the installed directories; a success message alone is not enough.
+Use a temporary project and explicit agent IDs for installation smoke tests. Compare each installed package with its source directory; a success message or a lone `SKILL.md` is not enough.
 
 ## Test behavior
 

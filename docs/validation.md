@@ -2,16 +2,19 @@
 
 Validation is evidence, not a compatibility slogan.
 
+Last verified: 2026-11-11.
+
 ## Current verified surfaces
 
 | Surface | Evidence | Result |
 | --- | --- | --- |
 | Skill packages | Official `quick_validate.py` from Codex skill creator | Four valid skills |
+| Shared specification | Agent Skills reference `skills-ref` at `83021e2` | Four valid skills |
 | Repository contract | `ruby scripts/validate_skills.rb` | Metadata, links, provenance, and README policy passed |
 | Upstream evidence | `ruby scripts/sync_from_catalogue.rb --check` | Generated references match the locked catalogue commit |
 | Catalogue quality | `validate_catalogue_readmes.rb` against the source repository | 23 canonical guides, 1,175 local links, and 51 Mermaid blocks passed |
-| CLI discovery | `skills@1.7.2 add . --list` | Four skills discovered |
-| Installation | Clean temporary project with explicit agent targets | Codex, Claude Code, Cursor, and GitHub Copilot received all four skills |
+| Remote CLI discovery | `skills@1.8.1 add rgmez/pragmatic-swift-pattern-skills --list` | Four skills discovered from GitHub |
+| Installation parity | Clean temporary project with explicit agent targets and directory comparison | Codex, Claude Code, Cursor, and GitHub Copilot received complete copies of all four skills |
 
 ## Behavioral scenarios
 

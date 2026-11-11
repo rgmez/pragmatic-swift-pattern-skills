@@ -12,6 +12,10 @@ EXPECTED_SKILLS = %w[
   implement-swift-design-pattern
   teach-swift-design-pattern
 ].freeze
+FRONTMATTER_FIELDS = %w[name description license compatibility metadata allowed-tools].freeze
+OPENAI_TOP_LEVEL_FIELDS = %w[interface dependencies policy].freeze
+OPENAI_INTERFACE_FIELDS = %w[display_name short_description icon_small icon_large brand_color default_prompt].freeze
+SKILL_NAME_PATTERN = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
 
 errors = []
 skill_directories = Dir.glob(File.join(ROOT, "skills", "*")).select { |path| File.directory?(path) }.sort
@@ -34,27 +38,103 @@ skill_directories.each do |directory|
   skill_path = File.join(directory, "SKILL.md")
   readme_path = File.join(directory, "README.md")
   openai_path = File.join(directory, "agents", "openai.yaml")
+  license_path = File.join(directory, "LICENSE")
 
   errors << "#{relative(directory)} missing SKILL.md" unless File.file?(skill_path)
   errors << "#{relative(directory)} missing human README.md" unless File.file?(readme_path)
   errors << "#{relative(directory)} missing agents/openai.yaml" unless File.file?(openai_path)
-  errors << "#{relative(directory)} missing bundled LICENSE" unless File.file?(File.join(directory, "LICENSE"))
+  errors << "#{relative(directory)} missing bundled LICENSE" unless File.file?(license_path)
+  if File.file?(license_path) && File.file?(File.join(ROOT, "LICENSE"))
+    errors << "#{relative(license_path)} must match the repository MIT license" unless File.read(license_path) == File.read(File.join(ROOT, "LICENSE"))
+  end
   next unless File.file?(skill_path)
 
   begin
-    metadata = frontmatter(skill_path)
-    errors << "#{relative(skill_path)} name must match directory" unless metadata["name"] == name
-    description = metadata["description"]
+    frontmatter_data = frontmatter(skill_path)
+    unless frontmatter_data.is_a?(Hash)
+      errors << "#{relative(skill_path)} frontmatter must be a mapping"
+      next
+    end
+
+    unknown_fields = frontmatter_data.keys.map(&:to_s) - FRONTMATTER_FIELDS
+    errors << "#{relative(skill_path)} has unsupported frontmatter fields: #{unknown_fields.join(", ")}" unless unknown_fields.empty?
+
+    skill_name = frontmatter_data["name"]
+    errors << "#{relative(skill_path)} name must match directory" unless skill_name == name
+    errors << "#{relative(skill_path)} name must use lowercase letters, digits, and single hyphens" unless skill_name.is_a?(String) && skill_name.length.between?(1, 64) && skill_name.match?(SKILL_NAME_PATTERN)
+
+    description = frontmatter_data["description"]
     errors << "#{relative(skill_path)} needs a focused description" unless description.is_a?(String) && description.length.between?(40, 1_024)
+    errors << "#{relative(skill_path)} license must be MIT" unless frontmatter_data["license"] == "MIT"
+
+    compatibility = frontmatter_data["compatibility"]
+    errors << "#{relative(skill_path)} compatibility must be a 1-500 character string" if compatibility && (!compatibility.is_a?(String) || !compatibility.length.between?(1, 500))
+
+    custom_metadata = frontmatter_data["metadata"]
+    if custom_metadata && (!custom_metadata.is_a?(Hash) || !custom_metadata.all? { |key, value| key.is_a?(String) && value.is_a?(String) })
+      errors << "#{relative(skill_path)} metadata keys and values must be strings"
+    end
+
+    allowed_tools = frontmatter_data["allowed-tools"]
+    errors << "#{relative(skill_path)} allowed-tools must be a string" if allowed_tools && !allowed_tools.is_a?(String)
   rescue StandardError => error
     errors << "#{relative(skill_path)}: #{error.message}"
   end
 
+  skill_text = File.read(skill_path)
+  Dir.glob(File.join(directory, "{references,scripts}", "**", "*")).select { |path| File.file?(path) }.each do |support_path|
+    support_reference = Pathname.new(support_path).relative_path_from(Pathname.new(directory)).to_s
+    errors << "#{relative(support_path)} is not routed from SKILL.md" unless skill_text.include?(support_reference)
+  end
+
+  skill_text.scan(/!?\[[^\]]*\]\(([^)]+)\)/).flatten.each do |raw_target|
+    target = raw_target.strip.sub(/\s+\"[^\"]*\"\z/, "")
+    next if target.empty? || target.start_with?("#", "http://", "https://", "mailto:")
+
+    decoded = URI.decode_www_form_component(target.split("#", 2).first)
+    destination = File.expand_path(decoded, File.dirname(skill_path))
+    errors << "#{relative(skill_path)} reference escapes its skill package: #{target}" unless destination.start_with?("#{directory}/")
+  end
+
   if File.file?(openai_path)
     begin
-      openai = YAML.safe_load(File.read(openai_path), permitted_classes: [], aliases: false)
-      prompt = openai.dig("interface", "default_prompt")
-      errors << "#{relative(openai_path)} default_prompt must mention $#{name}" unless prompt&.include?("$#{name}")
+      openai_raw = File.read(openai_path)
+      openai = YAML.safe_load(openai_raw, permitted_classes: [], aliases: false)
+      unless openai.is_a?(Hash)
+        errors << "#{relative(openai_path)} must be a mapping"
+        next
+      end
+
+      unknown_top_level = openai.keys.map(&:to_s) - OPENAI_TOP_LEVEL_FIELDS
+      errors << "#{relative(openai_path)} has unsupported top-level fields: #{unknown_top_level.join(", ")}" unless unknown_top_level.empty?
+
+      interface = openai["interface"]
+      unless interface.is_a?(Hash)
+        errors << "#{relative(openai_path)} interface must be a mapping"
+        next
+      end
+
+      unknown_interface = interface.keys.map(&:to_s) - OPENAI_INTERFACE_FIELDS
+      errors << "#{relative(openai_path)} has unsupported interface fields: #{unknown_interface.join(", ")}" unless unknown_interface.empty?
+
+      display_name = interface["display_name"]
+      errors << "#{relative(openai_path)} display_name must be a non-empty string" unless display_name.is_a?(String) && !display_name.empty?
+
+      short_description = interface["short_description"]
+      errors << "#{relative(openai_path)} short_description must contain 25-64 characters" unless short_description.is_a?(String) && short_description.length.between?(25, 64)
+
+      brand_color = interface["brand_color"]
+      errors << "#{relative(openai_path)} brand_color must be a six-digit hex color" unless brand_color.is_a?(String) && brand_color.match?(/\A#[0-9A-Fa-f]{6}\z/)
+
+      prompt = interface["default_prompt"]
+      errors << "#{relative(openai_path)} default_prompt must mention $#{name}" unless prompt.is_a?(String) && prompt.include?("$#{name}")
+
+      interface.each do |field, value|
+        next unless value.is_a?(String)
+
+        quoted_line = openai_raw.lines.any? { |line| line.match?(/^  #{Regexp.escape(field)}:\s*\".*\"\s*$/) }
+        errors << "#{relative(openai_path)} #{field} must be quoted" unless quoted_line
+      end
     rescue StandardError => error
       errors << "#{relative(openai_path)}: #{error.message}"
     end

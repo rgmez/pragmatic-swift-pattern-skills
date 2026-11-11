@@ -1,6 +1,7 @@
 ---
 name: audit-swift-pattern-catalogue
 description: Audit a Swift design-pattern catalogue for usefulness, classification, overengineering, executable evidence, documentation quality, and release readiness. Use for multi-pattern repositories or teaching collections; not for choosing one pattern for one feature or implementing fixes unless explicitly requested.
+license: MIT
 ---
 
 # Audit Swift Pattern Catalogue

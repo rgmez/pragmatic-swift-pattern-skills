@@ -1,6 +1,7 @@
 ---
 name: teach-swift-design-pattern
 description: Turn verified Swift pattern code and tests into a standalone evidence-first teaching guide with a direct baseline, turning point, diagram, trade-offs, alternatives, and when-not-to-use guidance. Use for documentation and learning artifacts; not for choosing architecture or inventing missing implementation evidence.
+license: MIT
 ---
 
 # Teach Swift Design Pattern

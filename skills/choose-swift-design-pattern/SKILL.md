@@ -1,6 +1,7 @@
 ---
 name: choose-swift-design-pattern
 description: Evaluate whether a concrete Swift app problem has earned a GoF design pattern or should retain a direct language or platform solution. Use when choosing or reviewing a pattern from current requirements; not for generic pattern definitions or implementing a preselected design.
+license: MIT
 ---
 
 # Choose Swift Design Pattern

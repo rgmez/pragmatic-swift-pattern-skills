@@ -1,6 +1,7 @@
 ---
 name: implement-swift-design-pattern
 description: Implement an evidence-backed design-pattern decision in Swift with the smallest useful representation and behavioral tests. Use after a concrete app requirement has earned one named pattern; not for choosing a pattern, teaching generic definitions, or adding speculative architecture.
+license: MIT
 ---
 
 # Implement Swift Design Pattern

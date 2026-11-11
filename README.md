@@ -64,6 +64,15 @@ Install all four for selected agents:
 npx skills add rgmez/pragmatic-swift-pattern-skills --skill '*' --agent codex --agent claude-code --agent cursor --agent github-copilot
 ```
 
+The verified project destinations intentionally reuse the shared Agent Skills location where the CLI supports it:
+
+| Agent | CLI ID | Project destination |
+| --- | --- | --- |
+| Codex | `codex` | `.agents/skills/` |
+| Claude Code | `claude-code` | `.claude/skills/` |
+| Cursor | `cursor` | `.agents/skills/` |
+| GitHub Copilot | `github-copilot` | `.agents/skills/` |
+
 After installation, invoke the skill by name in the agent, for example: `Use $choose-swift-design-pattern for this requirement.`
 
 ## Validation
@@ -71,7 +80,7 @@ After installation, invoke the skill by name in the agent, for example: `Use $ch
 ```sh
 ruby scripts/validate_skills.rb
 ruby scripts/sync_from_catalogue.rb --source ../Design-Patterns-in-Swift --check
-npx --yes skills@1.7.2 add . --list
+npx --yes skills@1.8.1 add . --list
 ```
 
 These checks validate package metadata, links, generated evidence, and CLI discovery; they do not claim runtime compatibility or adoption.

@@ -2,7 +2,7 @@
   "repository": "rgmez/Design-Patterns-in-Swift",
   "branch": "master",
   "commit": "9d7bd17cb741a228cf2e3db596bb7221d63d5808",
-  "synced_at": "2026-11-11T12:59:48Z",
+  "synced_at": "2026-11-11T13:22:34Z",
   "generated_files": [
     "skills/choose-swift-design-pattern/references/decision-matrix.md",
     "skills/choose-swift-design-pattern/references/catalogue-guidance.md",
@@ -16,7 +16,6 @@
     "skills/audit-swift-pattern-catalogue/references/catalogue-guidance.md",
     "skills/audit-swift-pattern-catalogue/references/example-quality-checklist.md",
     "skills/audit-swift-pattern-catalogue/references/catalogue-review.md",
-    "skills/audit-swift-pattern-catalogue/references/hardening-review.md",
-    "skills/audit-swift-pattern-catalogue/references/upstream-readme-validator.rb"
+    "skills/audit-swift-pattern-catalogue/references/hardening-review.md"
   ]
 }

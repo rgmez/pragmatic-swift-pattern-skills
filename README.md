@@ -14,6 +14,8 @@ Portable Agent Skills for choosing, implementing, teaching, and auditing Swift d
 
 Read the complete [position on design patterns](docs/position.md).
 
+These skills are the agent-facing companion to [Design Patterns in Swift](https://github.com/rgmez/Design-Patterns-in-Swift), the executable catalogue whose real-app examples, tests, diagrams, and decision reviews provide their evidence.
+
 ## Choose the smallest honest move
 
 ```mermaid
@@ -40,6 +42,8 @@ Accessible description: Begin with a current requirement, choose a direct Swift 
 ## Living tools
 
 Generated references keep the skills aligned with the upstream Swift catalogue, while human-authored instructions remain reviewable and never auto-merge.
+
+The source catalogue remains independently useful: browse and run [Design Patterns in Swift](https://github.com/rgmez/Design-Patterns-in-Swift) when you need the full implementation, canonical guide, or behavioral tests behind a skill recommendation.
 
 `upstream.lock.json` records the source commit, synchronization time, and generated reference paths; the daily workflow opens a reviewable PR when evidence changes, never an automatic merge.
 

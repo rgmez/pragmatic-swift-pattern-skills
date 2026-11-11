@@ -1,0 +1,103 @@
+---
+name: choose-swift-design-pattern
+description: Evaluate whether a concrete Swift app problem has earned a GoF design pattern or should retain a direct language or platform solution. Use when choosing or reviewing a pattern from current requirements; not for generic pattern definitions or implementing a preselected design.
+---
+
+# Choose Swift Design Pattern
+
+Assess observable design pressure in an iOS, macOS, or server-side Swift
+feature and produce one reviewable recommendation. A direct Swift or platform
+solution is a successful outcome. Do not introduce abstraction to anticipate
+hypothetical growth.
+
+## Decision workflow
+
+1. **Frame the current problem.** Identify the product behavior, the code that
+   owns it today, and the concrete requirement that creates pressure. Separate
+   observed facts from forecasts. If a missing fact could change the decision,
+   return `insufficient evidence` and name only the fact needed.
+2. **Establish the direct baseline.** Start with the smallest suitable Swift or
+   platform mechanism: a value type, enum, function, initializer, collection
+   operation, protocol extension, actor, `AsyncSequence`, Observation, or
+   native framework API. Explain why this baseline already succeeds or name
+   its specific remaining failure mode.
+3. **Apply the evidence gate.** Recommend a pattern only when a current
+   requirement creates observable pressure, the direct baseline has a named
+   failure mode, the pattern moves responsibility to a better owner, and a
+   test, type constraint, ownership rule, or measurement can verify the
+   improvement. If any condition is false, choose `no pattern yet`.
+4. **Test the boundary.** For a pattern candidate, state what responsibility it
+   would move, what dependency or behavior varies, and which owner should
+   absorb that variation. Reject candidates that merely rename the same
+   branches behind protocols or extra types.
+5. **Discriminate the nearest alternative.** Compare the candidate with the
+   alternative a reviewer could most plausibly choose from the same observed
+   pressure. If the user names a competing pattern, address it. Otherwise check
+   the candidate's neighbour group in the catalogue guidance and prefer a
+   plausible boundary from that group over an incidental implementation
+   variant. Use the direct design when no neighbouring pattern plausibly fits.
+   Discriminate by the requirement's change boundary, not class-diagram
+   similarity, and do not return a menu when the evidence supports one decision.
+   When the user's named competitor is not the plausible neighbour, reject it
+   explicitly and report the actual closest alternative separately.
+6. **Make reversal possible.** Name the concrete future requirement or missing
+   evidence that would justify revisiting the verdict. Do not generalize from
+   imagined scale.
+
+## Progressive references
+
+Load only the reference needed for the current decision:
+
+- Read the synced [pressure index](references/pressure-index.md) when the user describes symptoms rather than naming a candidate pattern. Use it to locate a plausible change boundary, then apply the evidence gate.
+- Read the [decision matrix](references/decision-matrix.md) when the observed
+  pressure could map to several catalogue patterns or no candidate has been
+  named yet. Use it to shortlist by pressure and rejection signal, not to skip
+  the evidence gate.
+- Read the [catalogue guidance](references/catalogue-guidance.md) when the
+  decision sits between commonly confused patterns. Follow its discriminating
+  question, then open a linked canonical pattern guide only when implementation
+  details or pattern-specific trade-offs are material.
+- Read the [example-quality checklist](references/example-quality-checklist.md)
+  when reviewing a concrete proposal or when the user explicitly asks to
+  implement the recommendation. A decision-only request does not require an
+  implementation or the full teaching-example documentation contract.
+
+Simple Factory is a useful direct construction baseline, not one of the 23 GoF patterns. Catalogue guidance may compare it with Factory Method and Abstract Factory even though it has no decision-matrix row.
+
+## Verdicts
+
+Return exactly one of these outcomes:
+
+- **Use `<Pattern>`.** The evidence gate passes and one GoF pattern has a
+  clearer responsibility boundary than the direct design.
+- **No pattern yet.** The direct design handles the present requirements with
+  less coupling, state, indirection, or invalid lifetime.
+- **Insufficient evidence.** One material fact is missing and different answers
+  would lead to different verdicts. Do not invent it.
+
+## Response contract
+
+Keep the recommendation compact and reviewable. Report:
+
+- **Observed pressure:** current requirement and evidence, without speculative
+  growth.
+- **Direct baseline:** the smallest Swift or platform design to try or retain.
+- **Verdict:** one of the three outcomes above.
+- **Responsibility and cost:** what moves if a pattern is used, what complexity
+  it removes, and what kinds of types, indirection, state, or lifecycle it may
+  add. For `no pattern yet`, state the complexity avoided. In a decision-only
+  response, describe the ownership boundary without naming protocols or
+  classes, requiring one type per participant, or selecting another concrete
+  representation. The verdict chooses a responsibility boundary, not its Swift
+  encoding; do not downgrade an evidence-backed pattern merely to avoid choosing
+  that encoding. Choose the representation only when implementation is
+  requested.
+- **Verification:** observable checks that would prove the selected boundary.
+- **Closest alternative:** the discriminating reason it loses.
+- **Named competitor:** when the user proposed a different, implausible pattern, reject it separately instead of relabelling it as the closest alternative.
+- **Reconsider when:** the concrete signal that would reverse the verdict.
+
+Do not implement the recommendation unless the user also asks for an
+implementation. Do not create a protocol for one implementation unless it is
+an external boundary, a test seam, or immediate variation already demonstrated
+by the requirements.

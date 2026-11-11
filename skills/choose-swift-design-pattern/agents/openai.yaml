@@ -1,0 +1,5 @@
+interface:
+  display_name: "Choose Swift Design Pattern"
+  short_description: "Choose a Swift pattern only when evidence earns it"
+  brand_color: "#F4512C"
+  default_prompt: "Use $choose-swift-design-pattern to decide whether this current Swift requirement has earned one pattern or should stay direct."

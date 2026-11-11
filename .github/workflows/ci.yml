@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate and install skills
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out skills repository
+        uses: actions/checkout@v4
+
+      - name: Check out pattern evidence
+        uses: actions/checkout@v4
+        with:
+          repository: rgmez/Design-Patterns-in-Swift
+          ref: master
+          path: upstream
+
+      - name: Validate skill packages
+        run: ruby scripts/validate_skills.rb
+
+      - name: Verify generated evidence is current
+        run: ruby scripts/sync_from_catalogue.rb --source upstream --check
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.20.0"
+
+      - name: Discover skills through the public CLI
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: npx --yes skills@1.7.2 add . --list
+
+      - name: Smoke-install for Codex, Claude Code, Cursor, and GitHub Copilot
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          mkdir .smoke
+          cd .smoke
+          npx --yes skills@1.7.2 add .. --skill '*' --agent codex --agent claude-code --agent cursor --agent github-copilot --copy --yes
+          for skill in choose-swift-design-pattern implement-swift-design-pattern teach-swift-design-pattern audit-swift-pattern-catalogue; do
+            # CLI 1.7.2 uses the shared Agent Skills location for Codex, Cursor,
+            # and GitHub Copilot, and a dedicated location for Claude Code.
+            test -f ".agents/skills/$skill/SKILL.md"
+            test -f ".claude/skills/$skill/SKILL.md"
+          done

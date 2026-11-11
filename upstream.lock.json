@@ -1,0 +1,22 @@
+{
+  "repository": "rgmez/Design-Patterns-in-Swift",
+  "branch": "master",
+  "commit": "80af9a56159f257ed17de4dc4057a91de24be76b",
+  "synced_at": "2026-11-11T12:34:54Z",
+  "generated_files": [
+    "skills/choose-swift-design-pattern/references/decision-matrix.md",
+    "skills/choose-swift-design-pattern/references/catalogue-guidance.md",
+    "skills/choose-swift-design-pattern/references/example-quality-checklist.md",
+    "skills/choose-swift-design-pattern/references/pressure-index.md",
+    "skills/implement-swift-design-pattern/references/evidence-gate.md",
+    "skills/implement-swift-design-pattern/references/decision-matrix.md",
+    "skills/teach-swift-design-pattern/references/pattern-readme-template.md",
+    "skills/teach-swift-design-pattern/references/readme-experience.md",
+    "skills/teach-swift-design-pattern/references/visual-style.md",
+    "skills/audit-swift-pattern-catalogue/references/catalogue-guidance.md",
+    "skills/audit-swift-pattern-catalogue/references/example-quality-checklist.md",
+    "skills/audit-swift-pattern-catalogue/references/catalogue-review.md",
+    "skills/audit-swift-pattern-catalogue/references/hardening-review.md",
+    "skills/audit-swift-pattern-catalogue/references/upstream-readme-validator.rb"
+  ]
+}

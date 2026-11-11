@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "mode": "read",
+  "colors": {
+    "canvas": "#0B0B0C",
+    "surface": "#161618",
+    "primary": "#FFFFFF",
+    "secondary": "#A7A7A7",
+    "rgRed": "#C92A2A",
+    "warmOrange": "#F4512C"
+  },
+  "assets": {
+    "hero": "assets/repository-hero.jpg"
+  },
+  "signature": "Direct Swift passes through an evidence gate before pattern work begins."
+}

@@ -1,8 +1,8 @@
-<!-- Generated from rgmez/Design-Patterns-in-Swift@80af9a56159f257ed17de4dc4057a91de24be76b:Documentation/readme-experience.md. Do not edit by hand. -->
+<!-- Generated from rgmez/Design-Patterns-in-Swift@9d7bd17cb741a228cf2e3db596bb7221d63d5808:Documentation/readme-experience.md. Do not edit by hand. -->
 
 # README Experience
 
-This document defines the reading experience for the repository landing page and the 23 canonical pattern guides. It complements the visual asset contract in [`visual-style.md`](https://github.com/rgmez/Design-Patterns-in-Swift/blob/80af9a56159f257ed17de4dc4057a91de24be76b/Documentation/visual-style.md); it does not replace it.
+This document defines the reading experience for the repository landing page and the 23 canonical pattern guides. It complements the visual asset contract in [`visual-style.md`](https://github.com/rgmez/Design-Patterns-in-Swift/blob/9d7bd17cb741a228cf2e3db596bb7221d63d5808/Documentation/visual-style.md); it does not replace it.
 
 ## Mode and goal
 

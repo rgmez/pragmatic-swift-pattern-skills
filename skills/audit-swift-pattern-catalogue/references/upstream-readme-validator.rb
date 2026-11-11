@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Generated from rgmez/Design-Patterns-in-Swift@80af9a56159f257ed17de4dc4057a91de24be76b:scripts/validate_readmes.rb. Do not edit by hand.
+# Generated from rgmez/Design-Patterns-in-Swift@9d7bd17cb741a228cf2e3db596bb7221d63d5808:scripts/validate_readmes.rb. Do not edit by hand.
 
 require "uri"
 

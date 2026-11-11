@@ -17,12 +17,12 @@ jobs:
 
     steps:
       - name: Check out skills repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Check out pattern evidence
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: rgmez/Design-Patterns-in-Swift
           ref: master

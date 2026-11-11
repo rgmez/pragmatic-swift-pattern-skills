@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - name: Check out skills repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Check out pattern evidence
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: rgmez/Design-Patterns-in-Swift
           ref: master
@@ -33,7 +33,7 @@ jobs:
         run: ruby scripts/sync_from_catalogue.rb --source upstream --check
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "22.20.0"
 

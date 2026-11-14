@@ -1,9 +1,9 @@
 {
   "repository": "rgmez/Design-Patterns-in-Swift",
   "branch": "master",
-  "commit": "e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4",
+  "commit": "98050ca55f40d1c987203289996902a0971c9159",
   "selection": "latest commit touching allowlisted evidence",
-  "synced_at": "2026-11-11T14:05:20Z",
+  "synced_at": "2026-11-14T13:33:21Z",
   "generated_files": [
     "skills/choose-swift-design-pattern/references/decision-matrix.md",
     "skills/choose-swift-design-pattern/references/catalogue-guidance.md",

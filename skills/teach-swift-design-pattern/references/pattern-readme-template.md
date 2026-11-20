@@ -1,4 +1,4 @@
-<!-- Generated from rgmez/Design-Patterns-in-Swift@e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4:Documentation/pattern-readme-template.md. Do not edit by hand. -->
+<!-- Generated from rgmez/Design-Patterns-in-Swift@98050ca55f40d1c987203289996902a0971c9159:Documentation/pattern-readme-template.md. Do not edit by hand. -->
 
 # 📘 Pattern README Template
 
@@ -33,6 +33,16 @@ Add this navigation row in the canonical pattern directory:
 - **Use [Pattern] when:** [The current evidence that earns the boundary.]
 - **Keep it simple when:** [The concrete condition under which the direct solution wins.]
 
+**In this guide**
+
+- **Understand the decision:** [App problem](#the-app-problem) → [Direct Swift](#start-with-direct-swift) → [Turning point](#the-turning-point).
+- **Explore the design:** [Pattern intent](#pattern-intent) · [Participants](#participants-and-responsibilities) · [Implementation](#how-the-swift-implementation-works) · [Diagram](#diagram).
+- **Check the evidence:** [Run the example](#run-the-example) · [Tests](#tests).
+- **Weigh the choice:** [Trade-offs](#trade-offs) · [Alternatives](#alternatives-considered) · [When not to use it](#when-not-to-use-it).
+- **Keep exploring:** [Source map](#source-map) · [Related patterns](#continue-exploring).
+
+<a id="the-app-problem"></a>
+
 ## 🎯 The app problem
 
 [Describe a concrete app scenario, the user or product outcome, and the constraint that makes the problem worth solving. Name the real domain rather than placeholder types such as `ProductA`, `Manager`, or `ConcreteCreator`.]
@@ -42,6 +52,8 @@ Add this navigation row in the canonical pattern directory:
 - [Observable requirement.]
 - [Observable requirement.]
 - [Constraint or failure behavior.]
+
+<a id="start-with-direct-swift"></a>
 
 ## 🪶 Start with direct Swift
 
@@ -53,13 +65,19 @@ Add this navigation row in the canonical pattern directory:
 
 [State why this solution is preferable while the requirements remain simple.]
 
+<a id="the-turning-point"></a>
+
 ## ⚡ The turning point
 
 [Identify the new, demonstrated requirement that creates measurable coupling, branching, invalid states, duplication, lifecycle risk, or test friction. Avoid hypothetical extensibility. Explain why a local refactor is no longer enough.]
 
+<a id="pattern-intent"></a>
+
 ## 🧭 Pattern intent
 
 [Explain in this app's language what responsibility the pattern separates or what variation it contains. Do not paste a textbook definition.]
+
+<a id="participants-and-responsibilities"></a>
 
 ## 🧩 Participants and responsibilities
 
@@ -70,6 +88,8 @@ Add this navigation row in the canonical pattern directory:
 
 Every protocol in this table must represent an external boundary, a test seam, or variation already required by the example. Delete ceremonial participants.
 
+<a id="how-the-swift-implementation-works"></a>
+
 ## ⚙️ How the Swift implementation works
 
 1. [Trace one real input from the client-facing API.]
@@ -77,6 +97,8 @@ Every protocol in this table must represent an external boundary, a test seam, o
 3. [End at the observable result or error.]
 
 Call out ownership, value/reference semantics, isolation, cancellation, ordering, and error propagation wherever they affect correctness. Explain decisions and invariants, not syntax.
+
+<a id="diagram"></a>
 
 ## 🗺️ Diagram
 
@@ -90,6 +112,8 @@ flowchart LR
 
 **Accessible description:** [Describe the same nodes, direction, and meaning in plain language so the diagram is not the only source of information.]
 
+<a id="run-the-example"></a>
+
 ## ▶️ Run the example
 
 From the repository root:
@@ -99,6 +123,8 @@ From the repository root:
 ```
 
 [Describe the observable output and any platform requirements. Do not make `print` output the only proof of behavior.]
+
+<a id="tests"></a>
 
 ## 🧪 Tests
 
@@ -114,6 +140,8 @@ The tests prove:
 
 Reference the exact test files and keep every command synchronized with the repository's actual toolchain, whether SwiftPM, `xcodebuild`, or another verified runner.
 
+<a id="trade-offs"></a>
+
 ## ⚖️ Trade-offs
 
 ### What improves
@@ -124,6 +152,8 @@ Reference the exact test files and keep every command synchronized with the repo
 
 - [Additional type, indirection, allocation, ordering rule, ownership burden, or maintenance cost introduced by the pattern.]
 
+<a id="alternatives-considered"></a>
+
 ## 🔀 Alternatives considered
 
 | Alternative | Prefer it when | Why it does not meet this example now |
@@ -133,6 +163,8 @@ Reference the exact test files and keep every command synchronized with the repo
 
 [Explicitly contrast patterns that are commonly confused, such as Simple Factory / Factory Method / Abstract Factory, Strategy / State / Bridge, or Decorator / Proxy / Chain of Responsibility.]
 
+<a id="when-not-to-use-it"></a>
+
 ## 🚫 When not to use it
 
 - [The direct Swift solution remains clearer when...]
@@ -141,6 +173,8 @@ Reference the exact test files and keep every command synchronized with the repo
 
 **Reconsider or remove the pattern when:** [Name the concrete requirement change that reverses the decision.]
 
+<a id="source-map"></a>
+
 ## 🗂️ Source map
 
 - [`Sources/.../Example.swift`](path/to/Example.swift) — [purpose].
@@ -148,6 +182,8 @@ Reference the exact test files and keep every command synchronized with the repo
 - [`Documentation/Assets/Patterns/.../[pattern]-header.png`](../../Documentation/Assets/Patterns/[category]/[pattern]-header.png) — editorial header.
 
 ---
+
+<a id="continue-exploring"></a>
 
 ## Continue exploring
 

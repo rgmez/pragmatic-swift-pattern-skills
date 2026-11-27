@@ -1,4 +1,4 @@
-<!-- Generated from rgmez/Design-Patterns-in-Swift@e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4:.codex/skills/choose-swift-design-pattern/references/catalogue-guidance.md. Do not edit by hand. -->
+<!-- Generated from rgmez/Design-Patterns-in-Swift@98050ca55f40d1c987203289996902a0971c9159:.codex/skills/choose-swift-design-pattern/references/catalogue-guidance.md. Do not edit by hand. -->
 
 # Catalogue Guidance
 
@@ -17,7 +17,7 @@ Use this map when two names seem plausible. Ask the discriminating question abou
 
 ## Reading route
 
-Open [decision-matrix.md](https://github.com/rgmez/Design-Patterns-in-Swift/blob/e833af3f3ca9da73ec6ce6e2d69d569d6e7e04e4/.codex/skills/choose-swift-design-pattern/references/decision-matrix.md) first when the requirement is known but the candidate boundary is not. Use its pressure, baseline, and rejection columns to keep the direct Swift design visible and to reject premature structure.
+Open [decision-matrix.md](https://github.com/rgmez/Design-Patterns-in-Swift/blob/98050ca55f40d1c987203289996902a0971c9159/.codex/skills/choose-swift-design-pattern/references/decision-matrix.md) first when the requirement is known but the candidate boundary is not. Use its pressure, baseline, and rejection columns to keep the direct Swift design visible and to reject premature structure.
 
 Open the linked canonical README from the matrix when one candidate survives: it contains the app problem, turning point, implementation ownership, tests, trade-offs, alternatives, and `When not to use it` guidance. The README is the evidence to review before implementation; this map does not replace it.
 
